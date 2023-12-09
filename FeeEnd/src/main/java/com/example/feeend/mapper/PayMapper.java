@@ -28,9 +28,9 @@ public interface PayMapper extends BaseMapper<Pay> {
     /**
      * 根据标签进行模糊查找获取支出记录
      */
-    @Select("select * from pay " +
-            "where" +
-            "(explain is null or explain like concat('%',explain,'%'))")
+    @Select("select * from pay" +
+            " where" +
+            " (`explain` is null or `explain` like concat('%',`explain`,'%')) ")
     List<Pay> PayByExplain(@Param("explain")String explain);
 
 
