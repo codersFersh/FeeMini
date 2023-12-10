@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Pay {
     private Integer id;
-    private String explain;
+    private String label;
     private Double payout;
     private Date costtime;
 
@@ -12,9 +12,9 @@ public class Pay {
     public Pay() {
     }
 
-    public Pay(Integer id, String explain, Double payout, Date costtime) {
+    public Pay(Integer id, String label, Double payout, Date costtime) {
         this.id = id;
-        this.explain = explain;
+        this.label = label;
         this.payout = payout;
         this.costtime = costtime;
     }
@@ -27,12 +27,12 @@ public class Pay {
         this.id = id;
     }
 
-    public String getExplain() {
-        return explain;
+    public String getLabel() {
+        return label;
     }
 
-    public void setExplain(String explain) {
-        this.explain = explain;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Double getPayout() {
@@ -55,7 +55,7 @@ public class Pay {
     public String toString() {
         return "Pay{" +
                 "id=" + id +
-                ", explain='" + explain + '\'' +
+                ", label='" + label + '\'' +
                 ", payout=" + payout +
                 ", costtime=" + costtime +
                 '}';

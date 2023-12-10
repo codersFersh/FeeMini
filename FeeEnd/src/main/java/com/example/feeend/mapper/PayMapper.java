@@ -30,14 +30,14 @@ public interface PayMapper extends BaseMapper<Pay> {
      */
     @Select("select * from pay" +
             " where" +
-            " (`explain` is null or `explain` like concat('%',`explain`,'%')) ")
-    List<Pay> PayByExplain(@Param("explain")String explain);
+            " (label is null or label like concat('%',label,'%')) ")
+    List<Pay> PayByLabel(@Param("explain")String label);
 
 
     /**
      * 新增
      */
-    @Insert("insert into pay(explain,payout)values (#{expalin},#{payout})")
+    @Insert("insert into pay(label,payout)values (#{label},#{payout})")
     int PayAdd(Pay pay);
 
     /**
@@ -45,11 +45,7 @@ public interface PayMapper extends BaseMapper<Pay> {
      * @param pay
      * @return
      */
-    @Update("update pay set" +
-            " explain=#{explain}" +
-            "payout=#{payout}" +
-            "where" +
-            "id=#{id}")
+    @Update("update pay set label=#{label},payout=#{payout} where id=#{id}")
     int PayEdit(Pay pay);
 
 

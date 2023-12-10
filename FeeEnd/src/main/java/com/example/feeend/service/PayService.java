@@ -28,8 +28,8 @@ public class PayService extends ServiceImpl<PayMapper, Pay> {
     /**
      * 根据标题模糊查询支出记录
      */
-    public List<Pay> PayByExplain(String explain) {
-        return baseMapper.PayByExplain(explain);
+    public List<Pay> PayByLabel(String label) {
+        return baseMapper.PayByLabel(label);
     }
 
     /**

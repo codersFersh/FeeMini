@@ -38,10 +38,10 @@ public class PayController {
     /**
      * 根据标题模糊查询支出记录
      */
-    @GetMapping("/searchExplain")
+    @GetMapping("/searchLabel")
     @ResponseBody
-    public List<Pay> PayByExplain(@RequestParam(required = false) String explain) {
-        return payService.PayByExplain(explain);
+    public List<Pay> PayByLabel(@RequestParam(required = false) String label) {
+        return payService.PayByLabel(label);
     }
 
     /**
