@@ -2,18 +2,30 @@
   <div class="body">
     <el-container>
       <el-aside :width="asideWidth" :collapse="isAsideCollapse">
-        <el-button @click="toggleAsideCollapse">折叠</el-button>
+        <div>
+          <img src="@/assets/费用管理.png" style="margin-top: 20px;">
+          <h3>班费管理系统</h3>
+        </div>
         <left-Aside :isCollapse="isAsideCollapse" />
       </el-aside>
       <el-container>
         <el-header>
-          <top-header />
+          <el-button @click="toggleAsideCollapse" style="float:left;
+          height: 60px;
+          background-color: #B3C0D1;
+          border: 1px solid #B3C0D1;
+          margin-left: -20px;
+          ">
+            <i v-if="showIcon" class="el-icon-s-fold"></i>
+            <i v-else class="el-icon-s-unfold"></i>
+          </el-button>
+          <top-Header />
         </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
       </el-container>
-    </el-container>   
+    </el-container>
   </div>
 </template>
 
@@ -26,46 +38,57 @@ export default {
   name: 'Home',
   data() {
     return {
-      asideWidth: '201px',
+      asideWidth: '121px',
       isAsideCollapse: false,
+      showIcon: true,      //控制显示的图标
     };
   },
   methods: {
     toggleAsideCollapse() {
       this.isAsideCollapse = !this.isAsideCollapse;
-      this.asideWidth = this.isAsideCollapse ? '70px' : '201px';
+      this.asideWidth = this.isAsideCollapse ? '70px' : '121px';
+      this.showIcon = !this.showIcon;
     },
   },
+
 };
 </script>
 
 <style>
-  .body {
-    width: 100%;
-    height: 100%;
-  }
+.body {
+  width: 100%;
+  height: 100%;
+}
 
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-  }
+.el-header {
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+}
 
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    height: 100vh;
-  }
+.el-aside {
+  background-color: #304156;
+  color: white;
+  text-align: center;
+  height: 100vh;
+}
 
-  .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    height: 80vh;
-  }
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
+  height: 80vh;
+}
 
-  body > .el-container {
-    margin-bottom: 40px;
-  }
+body>.el-container {
+  margin-bottom: 40px;
+}
+
+.el-button {
+  font-size: 25px !important;
+}
+
+.el-menu {
+  border-right: solid 1px #D3DCE6;
+}
 </style>

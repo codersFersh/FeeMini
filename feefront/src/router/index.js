@@ -1,25 +1,27 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/components/Home.vue';
-import Test from '@/views/test/test.vue';
+import test from '@/views/testview/test.vue';
 
 Vue.use(VueRouter);
 
 const routes = [{
         path: '/',
-        name: 'Home',
+        redirect: '/home'
+    }, {
+        path: '/home',
         component: Home,
         meta: { authRequired: true },
         children: [{
-            path: 'test', // 相对于父路由 '/Home' 的路径
-            name: 'Test',
-            component: Test,
+            path: '/test',
+            component: () =>
+                import ('@/views/testview/test.vue')
         }, ],
     },
     {
         path: '/test',
         name: 'test',
-        component: Test,
+        component: test,
     },
 ];
 
