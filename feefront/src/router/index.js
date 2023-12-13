@@ -2,26 +2,61 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/components/Home.vue';
 import test from '@/views/testview/test.vue';
+import PayManage from '@/views/pay/PayManage.vue';
+import IncomeManage from '@/views/income/IncomeManage.vue';
+import StatManage from '@/views/stat/StatManage.vue';
 
 Vue.use(VueRouter);
 
 const routes = [{
         path: '/',
-        redirect: '/home'
-    }, {
-        path: '/home',
+        redirect: '/Home'
+    },
+    {
+        path: '/Home',
         component: Home,
         meta: { authRequired: true },
         children: [{
-            path: '/test',
-            component: () =>
-                import ('@/views/testview/test.vue')
-        }, ],
+                path: 'test',
+                component: () =>
+                    import ('@/views/testview/test.vue')
+            },
+            {
+                path: 'PayManage',
+                component: () =>
+                    import ('@/views/pay/PayManage.vue')
+            },
+            {
+                path: 'IncomeManage',
+                component: () =>
+                    import ('@/views/income/IncomeManage.vue')
+            },
+            {
+                path: 'StatManage',
+                component: () =>
+                    import ('@/views/stat/StatManage.vue')
+            },
+        ],
     },
     {
         path: '/test',
         name: 'test',
         component: test,
+    },
+    {
+        path: '/PayManage',
+        name: 'PayManage',
+        component: PayManage,
+    },
+    {
+        path: '/IncomeManage',
+        name: 'IncomeManage',
+        component: IncomeManage,
+    },
+    {
+        path: '/StatManage',
+        name: 'StatManage',
+        component: StatManage,
     },
 ];
 
