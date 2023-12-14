@@ -32,6 +32,7 @@ public class IncomeService extends ServiceImpl<IncomeMapper, Income> {
         return baseMapper.IncomeByTitle(title);
     }
 
+
     /**
      * 新增收入记录
      */

@@ -1,11 +1,14 @@
 package com.example.feeend.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Pay {
     private Integer id;
     private String label;
     private Double payout;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date costtime;
 
 

@@ -5,10 +5,9 @@ import qs from 'qs'
 
 
 
-// axios.defaults.timeout = 5000
-// const baseURL = 'http://localhost:8089/'
-const baseURL = process.env.VUE_APP_BASE_API
-    // const baseURL='http://120.79.66.82:5201/'
+
+const baseURL = 'http://localhost:8090'
+
 
 /* global ctxPaths */
 // request 拦截器

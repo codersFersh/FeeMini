@@ -10,7 +10,7 @@
       </el-aside>
       <el-container>
         <el-header>
-          <el-button @click="toggleAsideCollapse" style="float:left;
+          <el-button class="togbnt" @click="toggleAsideCollapse" style="float:left;
           height: 60px;
           background-color: #B3C0D1;
           border: 1px solid #B3C0D1;
@@ -84,8 +84,8 @@ body>.el-container {
   margin-bottom: 40px;
 }
 
-.el-button {
-  font-size: 25px !important;
+.togbnt {
+  font-size: 30px !important;
 }
 
 .el-menu {

@@ -4,7 +4,9 @@ import Home from '@/components/Home.vue';
 import test from '@/views/testview/test.vue';
 import PayManage from '@/views/pay/PayManage.vue';
 import IncomeManage from '@/views/income/IncomeManage.vue';
+import IncomeAdd from '@/views/income/IncomeAdd.vue';
 import StatManage from '@/views/stat/StatManage.vue';
+
 
 Vue.use(VueRouter);
 
@@ -57,6 +59,11 @@ const routes = [{
         path: '/StatManage',
         name: 'StatManage',
         component: StatManage,
+    },
+    {
+        path: '/IncomeAdd',
+        name: 'IncomeAdd',
+        component: IncomeAdd,
     },
 ];
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("income")
+@CrossOrigin("http://localhost:8080/")
 public class IncomeController {
     private final IncomeService incomeService;
 
@@ -40,9 +41,11 @@ public class IncomeController {
      */
     @GetMapping("/searchTitle")
     @ResponseBody
-    public List<Income> IncomeByTitle(@RequestParam(required = false) String title) {
+    public List<Income> IncomeByTitle(@RequestParam String title) {
         return incomeService.IncomeByTitle(title);
     }
+
+
 
     /**
      * 新增收入记录
@@ -59,6 +62,8 @@ public class IncomeController {
     @PostMapping("/edit")
     @ResponseBody
     public boolean IncomeEdit(@RequestBody Income income) {
+
+
         return incomeService.IncomeEdit(income);
     }
 

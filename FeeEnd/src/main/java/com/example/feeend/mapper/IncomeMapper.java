@@ -32,13 +32,16 @@ public interface IncomeMapper extends BaseMapper<Income> {
      */
     @Select("select * from income" +
             " where " +
-            "(title is null or title like concat('%',title,'%')) ")
+            "(title is null or title like concat('%',#{title},'%') )")
     List<Income> IncomeByTitle(@Param("title")String title);
+
+
+
 
     /**
      * 新增
      */
-    @Insert("insert into income(title,budget) values(#{title},#{budget})")
+    @Insert("insert into income(title,budget,classsize,descr) values(#{title},#{budget},#{classsize},#{descr})")
     int IncomeAdd (Income income);
 
     /**
@@ -47,8 +50,9 @@ public interface IncomeMapper extends BaseMapper<Income> {
     @Update("update income set" +
             " title=#{title}," +
             "budget=#{budget}," +
-            "confirmdate=#{confirmdate}," +
-            "receipt=#{receipt} " +
+            "receipt=#{receipt}," +
+            "paysize=#{paysize}, " +
+            "descr=#{descr} " +
             "where" +
             " id=#{id}")
     int IncomeEdit(Income income);
