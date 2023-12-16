@@ -6,20 +6,22 @@ import java.util.Date;
 
 public class Pay {
     private Integer id;
-    private String label;
-    private Double payout;
+    private String item;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date costtime;
+    private Double payout;
+    private  String  notes;
 
 
     public Pay() {
     }
 
-    public Pay(Integer id, String label, Double payout, Date costtime) {
+    public Pay(Integer id, String item, Date costtime, Double payout, String notes) {
         this.id = id;
-        this.label = label;
-        this.payout = payout;
+        this.item = item;
         this.costtime = costtime;
+        this.payout = payout;
+        this.notes = notes;
     }
 
     public Integer getId() {
@@ -30,20 +32,12 @@ public class Pay {
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getItem() {
+        return item;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public Double getPayout() {
-        return payout;
-    }
-
-    public void setPayout(Double payout) {
-        this.payout = payout;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public Date getCosttime() {
@@ -54,13 +48,30 @@ public class Pay {
         this.costtime = costtime;
     }
 
+    public Double getPayout() {
+        return payout;
+    }
+
+    public void setPayout(Double payout) {
+        this.payout = payout;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     @Override
     public String toString() {
         return "Pay{" +
                 "id=" + id +
-                ", label='" + label + '\'' +
-                ", payout=" + payout +
+                ", item='" + item + '\'' +
                 ", costtime=" + costtime +
+                ", payout=" + payout +
+                ", notes='" + notes + '\'' +
                 '}';
     }
 }

@@ -2,7 +2,7 @@
   <div class="home">
     <div class="elTable">
       <el-tabs type="border-card" @tab-click="handleTabClick">
-        <el-tab-pane label="收入管理" mame="tab1">
+        <el-tab-pane label="支出管理" mame="tab1">
           <el-table :data="pageData" style="width: 100%; margin: 0 auto; border-radius: 2px; border-bottom: 0px;"
             :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }" max-height="550px"
             border>
@@ -52,9 +52,7 @@
 
           <!-- 分页 -->
           <el-row :gutter="20">
-            <el-col :span="4">
-              <!-- <div class="grid-content bg-purple" style="padding-left:5px;padding-top: 8px;"> <el-button type="danger"
-                  size="mini">批量删除</el-button></div> -->
+            <el-col :span="4">             
             </el-col>
             <el-col :span="16">
               <div class="grid-content bg-purple">
@@ -293,8 +291,12 @@ export default {
       this.$notify.warning({
         title: '注意，新增操作',
         message: '编号和创建时间数据库自动生成，无需手动添加',
-        showClose: false
+        showClose: false,
+        duration:2000
       });
+
+      //刷新table
+      this.fetchData()
 
     },
 
@@ -360,12 +362,11 @@ export default {
                 type: "error",
               });
             } else {
-              this.refresh();
+              this.fetchData()
               this.$message({
                 message: "删除成功",
                 type: "success",
               });
-              this.refresh();//刷新页面
             }
           })
         })

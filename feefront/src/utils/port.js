@@ -39,3 +39,57 @@ export function IncomeDel(params) {
         params
     )
 }
+
+// 获取总收入
+export function SumReceipt() {
+    return request.GET(
+        '/income/sum',
+    )
+}
+
+// 获取总支出
+export function SumPayout() {
+    return request.GET(
+        '/pay/sum',
+    )
+}
+
+
+//查询所有支出信息
+export function PayAll() {
+    return request.GET(
+        '/pay/all',
+    )
+}
+
+//根据title收入信息
+export function searchItem(params) {
+    return request.GET(
+        '/pay/searchItem',
+        params
+    )
+}
+
+//编辑收入信息
+export function PayEdit(params) {
+    return request.POST2(
+        '/pay/edit',
+        params
+    )
+}
+
+//新增班费收入
+export function PayAdd(params) {
+    return request.POST2(
+        '/pay/add',
+        params
+    )
+}
+
+//删除班费收入
+export function PayDel(params) {
+    return request.POST2(
+        '/pay/del',
+        params
+    )
+}

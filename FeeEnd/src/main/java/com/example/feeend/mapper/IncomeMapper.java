@@ -36,7 +36,12 @@ public interface IncomeMapper extends BaseMapper<Income> {
     List<Income> IncomeByTitle(@Param("title")String title);
 
 
-
+    /**
+     * 查询总收入
+     * @return
+     */
+    @Select("select sum(receipt) from income")
+    double SumReceipt();
 
     /**
      * 新增

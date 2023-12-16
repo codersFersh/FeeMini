@@ -15,6 +15,7 @@ public class Income {
     private Integer classsize;
 
     private Integer paysize;
+
     private String descr;
 
     public Income() {

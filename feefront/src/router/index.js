@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '@/components/Home.vue';
 import test from '@/views/testview/test.vue';
 import PayManage from '@/views/pay/PayManage.vue';
+import PayAdd from '@/views/pay/PayAdd.vue';
 import IncomeManage from '@/views/income/IncomeManage.vue';
 import IncomeAdd from '@/views/income/IncomeAdd.vue';
 import StatManage from '@/views/stat/StatManage.vue';
@@ -64,6 +65,11 @@ const routes = [{
         path: '/IncomeAdd',
         name: 'IncomeAdd',
         component: IncomeAdd,
+    },
+    {
+        path: '/PayAdd',
+        name: 'PayAdd',
+        component: PayAdd,
     },
 ];
 

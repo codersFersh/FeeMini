@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("pay")
+@CrossOrigin("http://localhost:8080/")
 public class PayController {
     private final PayService payService;
 
@@ -38,10 +39,20 @@ public class PayController {
     /**
      * 根据标题模糊查询支出记录
      */
-    @GetMapping("/searchLabel")
+    @GetMapping("/searchItem")
     @ResponseBody
-    public List<Pay> PayByLabel(@RequestParam(required = false) String label) {
-        return payService.PayByLabel(label);
+    public List<Pay> PayByItem(@RequestParam(required = false) String item) {
+        return payService.PayByItem(item);
+    }
+
+    /**
+     * 查询总支出
+     * @return
+     */
+    @GetMapping("/sum")
+    @ResponseBody
+    public double SumPayout(){
+        return payService.SumPayout();
     }
 
     /**

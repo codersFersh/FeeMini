@@ -30,14 +30,22 @@ public interface PayMapper extends BaseMapper<Pay> {
      */
     @Select("select * from pay" +
             " where" +
-            " (label is null or label like concat('%',label,'%')) ")
-    List<Pay> PayByLabel(@Param("explain")String label);
+            " (item is null or item like concat('%',#{item},'%')) ")
+    List<Pay> PayByItem(@Param("item")String item);
+
+
+    /**
+     * 查询总支出
+     * @return
+     */
+    @Select("select sum(payout) from pay")
+    double SumPayout();
 
 
     /**
      * 新增
      */
-    @Insert("insert into pay(label,payout)values (#{label},#{payout})")
+    @Insert("insert into pay(item,payout,notes)values (#{item},#{payout},#{notes})")
     int PayAdd(Pay pay);
 
     /**
@@ -45,7 +53,7 @@ public interface PayMapper extends BaseMapper<Pay> {
      * @param pay
      * @return
      */
-    @Update("update pay set label=#{label},payout=#{payout} where id=#{id}")
+    @Update("update pay set item=#{item},payout=#{payout},notes=#{notes} where id=#{id}")
     int PayEdit(Pay pay);
 
 

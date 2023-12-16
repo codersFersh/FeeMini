@@ -45,7 +45,15 @@ public class IncomeController {
         return incomeService.IncomeByTitle(title);
     }
 
-
+    /**
+     * 查询总收入
+     * @return
+     */
+    @GetMapping("/sum")
+    @ResponseBody
+    public double SumReceipt(){
+        return incomeService.SumReceipt();
+    }
 
     /**
      * 新增收入记录
@@ -66,6 +74,8 @@ public class IncomeController {
 
         return incomeService.IncomeEdit(income);
     }
+
+
 
     /**
      * 删除收入记录
