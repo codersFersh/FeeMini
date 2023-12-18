@@ -40,6 +40,14 @@ public class IncomeService extends ServiceImpl<IncomeMapper, Income> {
         return baseMapper.SumReceipt();
     }
 
+    /**
+     * 查询总预收
+     * @return
+     */
+    public double SumBudget(){
+        return baseMapper.SumBudget();
+    }
+
 
     /**
      * 新增收入记录

@@ -2,7 +2,7 @@
   <div class="home">
     <div class="elTable">
       <el-tabs type="border-card" @tab-click="handleTabClick">
-        <el-tab-pane label="支出管理" mame="tab1">
+        <el-tab-pane label="收入管理" mame="tab1">
           <el-table :data="pageData" style="width: 100%; margin: 0 auto; border-radius: 2px; border-bottom: 0px;"
             :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }" max-height="550px"
             border>
@@ -322,7 +322,6 @@ export default {
       this.$refs.formedit.validate((val) => {
         if (val) {
           IncomeEdit(this.formedit).then(res => {
-            console.log(res)
             if (res) {
               this.$message({
                 message: "编辑成功",
@@ -339,10 +338,6 @@ export default {
           });
         }
       });
-    },
-
-    refresh() {
-      location.reload();//刷新页面
     },
 
     //删除班费
@@ -372,7 +367,6 @@ export default {
         })
       } catch (err) { }
     }
-
   },
 }
 

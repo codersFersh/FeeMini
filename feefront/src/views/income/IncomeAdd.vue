@@ -124,7 +124,7 @@ export default {
     },
   },
   // created() {
-  //   // 获取总收入
+  //   // 获取班费余额
   //   SumReceipt()
   //     .then((resultA) => {
   //       // 将总收入赋值给a

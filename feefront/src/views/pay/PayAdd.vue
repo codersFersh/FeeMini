@@ -1,6 +1,14 @@
 <template>
   <div>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+      <el-row style="margin-left: 5%; margin-bottom: 30px; font-size: 80px;">
+        <el-col :span="6">
+          <el-descriptions title="请注意班费余额">
+            <el-descriptions-item label="班费余额" style="font-size: 40px !important;">{{ surplus
+            }} 元</el-descriptions-item>
+          </el-descriptions>
+        </el-col>
+      </el-row>
       <el-row>
         <el-col :span="6">
           <el-form-item label="项目名称：" :label-width="formLabelWidth" prop="item">
@@ -32,11 +40,16 @@
 
 <script>
 import { PayAdd } from "@/utils/port";
-// import { SumReceipt } from "@/utils/port";
-// import { SumPayout } from "@/utils/port";
+import { SumReceipt } from "@/utils/port";
+import { SumPayout } from "@/utils/port";
 export default {
+  props: {
+    surplus: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
-
     return {
       roleInfoList: '',
       gradeInfoList: '',
@@ -46,8 +59,9 @@ export default {
         payout: "",
         notes: "",
       },
-      // a: 0,
-      // b: 0,
+      //获取余额
+      a: 0,
+      b: 0,
       rules: {
 
         //表单验证规则
@@ -62,14 +76,24 @@ export default {
             trigger: "blur",
           },
         ],
-        //预收班费
+        // 修改支出班费规则，不能大于余额
         payout: [
           {
             required: true,
             pattern: /^(([1-9]\d{0,4})|50000)(\.\d{1,2})?$/,
             message: "请输入合法的金额，最大为50000，输入整数",
-            trigger: "change"
-          }
+            trigger: "change",
+          },
+          {
+            validator: (rule, value, callback) => {
+              if (value > this.surplus) {
+                callback(new Error("支出金额不能大于班费余额"));
+              } else {
+                callback();
+              }
+            },
+            trigger: "change",
+          },
         ],
 
       },
@@ -97,6 +121,7 @@ export default {
                 type: "success",
               });
               this.$refs.ruleForm.resetFields()
+              this.SumSurplus()
             } else {
               this.$message({
                 message: "新增班费收入失败",
@@ -107,22 +132,26 @@ export default {
         }
       })
     },
+
+    SumSurplus() {
+      // 获取余额
+      SumReceipt()
+        .then((resultA) => {
+          // 将总收入赋值给a
+          this.a = resultA;
+          return SumPayout();
+        })
+        .then((resultB) => {
+          // 将总支出赋值给 b
+          this.b = resultB;
+          // 计算余额并赋值给 surplus 
+          this.surplus = this.a - this.b;
+        })
+    }
   },
-  // created() {
-  //   // 获取总收入
-  //   SumReceipt()
-  //     .then((resultA) => {
-  //       // 将总收入赋值给a
-  //       this.a = resultA;
-  //       return SumPayout();
-  //     })
-  //     .then((resultB) => {
-  //       // 将总支出赋值给 b
-  //       this.b = resultB;
-  //       // 计算余额并赋值给 surplus 
-  //       this.ruleForm.surplus = this.a - this.b;
-  //     })
-  // }
+  created() {
+    this.SumSurplus()
+  }
 
 };
 </script>

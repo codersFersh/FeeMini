@@ -46,7 +46,7 @@
 
           <!-- 分页 -->
           <el-row :gutter="20">
-            <el-col :span="4">             
+            <el-col :span="4">
             </el-col>
             <el-col :span="16">
               <div class="grid-content bg-purple">
@@ -61,13 +61,11 @@
               </div>
             </el-col>
           </el-row>
-
         </el-tab-pane>
-
 
         <!-- 新增功能 -->
         <el-tab-pane label="新增操作" name="tab2">
-          <PayAdd></PayAdd>
+          <PayAdd :surplus="surplus"></PayAdd>
         </el-tab-pane>
       </el-tabs>
       <div>
@@ -95,7 +93,7 @@
                 <el-form-item label="支出金额:" :label-width="formLabelWidth" prop="payout">
                   <el-input v-model="formedit.payout" clearable style="width: 220px;"></el-input>
                 </el-form-item>
-              </el-col>             
+              </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
@@ -104,8 +102,8 @@
                     v-model="formedit.notes" show-word-limit maxlength="200">
                   </el-input>
                 </el-form-item>
-              </el-col>            
-            </el-row>         
+              </el-col>
+            </el-row>
 
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -125,6 +123,8 @@ import { PayAll } from '@/utils/port';
 import { searchItem } from "@/utils/port";
 import { PayEdit } from "@/utils/port";
 import { PayDel } from "@/utils/port";
+import { SumReceipt } from "@/utils/port";
+import { SumPayout } from "@/utils/port";
 import PayAdd from '@/views/pay/PayAdd.vue';
 export default {
   components: { PayAdd },
@@ -142,12 +142,19 @@ export default {
       item: "",
 
 
+      //获取余额
+      a: 0,
+      b: 0,
+      surplus: 0,
+
+
       //编辑表对应数据
       formedit: {
         item: "",
         payout: "",
         notes: ""
       },
+
 
 
       rules: {
@@ -192,7 +199,7 @@ export default {
             },
 
           }
-        ],     
+        ],
       },
 
 
@@ -214,6 +221,8 @@ export default {
   created() {
     //分页
     this.fetchData();
+
+
   },
   mounted() {
   },
@@ -258,12 +267,13 @@ export default {
         title: '注意，新增操作',
         message: '编号和创建时间数据库自动生成，无需手动添加',
         showClose: false,
-        duration:2000
+        duration: 2000
       });
 
       //刷新table
       this.fetchData()
-
+      //获取余额
+      this.SumSurplus()
     },
 
     //模糊查询
@@ -307,10 +317,6 @@ export default {
       });
     },
 
-    refresh() {
-      location.reload();//刷新页面
-    },
-
     //删除班费
     //删除按钮
     async handleDelete(row) {
@@ -337,8 +343,24 @@ export default {
           })
         })
       } catch (err) { }
-    }
+    },
 
+    //获取余额
+    SumSurplus() {
+      // 获取余额
+      SumReceipt()
+        .then((resultA) => {
+          // 将总收入赋值给a
+          this.a = resultA;
+          return SumPayout();
+        })
+        .then((resultB) => {
+          // 将总支出赋值给 b
+          this.b = resultB;
+          // 计算余额并赋值给 surplus 
+          this.surplus = this.a - this.b;
+        })
+    }
   },
 }
 
@@ -401,8 +423,6 @@ export default {
   text-align: center;
   padding-top: 7px;
 }
-
-
 
 
 //解决table设置fixed缩小显示不全问题

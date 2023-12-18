@@ -1,15 +1,12 @@
-import router from '@/router';
-import axios from 'axios'
+import axios from 'axios';
 import { Message } from 'element-ui';
-import qs from 'qs'
+import router from '@/router';
+import qs from 'qs';
+
+const baseURL = 'http://localhost:8090';
 
 
 
-
-const baseURL = 'http://localhost:8090'
-
-
-/* global ctxPaths */
 // request 拦截器
 axios.interceptors.request.use(
         config => {
@@ -22,35 +19,25 @@ axios.interceptors.request.use(
     )
     // reponse 拦截器
 axios.interceptors.response.use(
-        response => {
-            const { data } = response
-            return data;
-        },
-        error => {
-            if (error.response) {
-                switch (error.response.status) {
-                    case 401:
-                        localStorage.removeItem('token');
-                        const { status, data } = response
-                        const { message } = data
-                        Message.error(message)
-                        router.push({ name: 'Login' })
-                }
+    response => {
+        const { data } = response;
+        return data;
+    },
+    error => {
+        if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    localStorage.removeItem('token');
+                    Message.error("Token已失效或者不存在");
+                    router.push({ name: 'Login' });
+                    break;
             }
         }
-    )
-    // axios.interceptors.response.use(
-    //     response => {
-    //         if (response.data.status === 401) {
-    //             alert('登录信息过期，请重新登录')
-    //             window.location.href = '/'
-    //         }
-    //         return Promise.resolve(response.data)
-    //     },
-    //     error => {
-    //         return Promise.reject(error)
-    //     }
-    // )
+        return Promise.reject(error);
+    }
+);
+
+
 
 
 
@@ -58,32 +45,32 @@ export const POST = (url, params) => {
     return axios.post(`${baseURL}${url}`, qs.stringify(params), {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    }).then(res => res)
-}
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    });
+};
 
 export const POST2 = (url, params) => {
     return axios.post(`${baseURL}${url}`, params, {
         headers: {
             'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    }).then(res => res)
-}
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    });
+};
 
 export const GET = (url, params) => {
-    return axios.get(`${baseURL}${url}`, { params: params }).then(res => res)
-}
+    return axios.get(`${baseURL}${url}`, { params });
+};
 
 export const PUT = (url, params) => {
-    return axios.put(`${baseURL}${url}`, params).then(res => res)
-}
+    return axios.put(`${baseURL}${url}`, params);
+};
 
 export const DELETE = (url, params) => {
-    return axios.delete(`${baseURL}${url}`, { params: params }).then(res => res)
-}
+    return axios.delete(`${baseURL}${url}`, { params });
+};
 
 export const PATCH = (url, params) => {
-    return axios.patch(`${baseURL}${url}`, params).then(res => res)
-}
+    return axios.patch(`${baseURL}${url}`, params);
+};

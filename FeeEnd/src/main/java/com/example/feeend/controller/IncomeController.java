@@ -7,10 +7,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+
 @RestController
 @RequestMapping("income")
-@CrossOrigin("http://localhost:8080/")
+@CrossOrigin("http://localhost:8080")
 public class IncomeController {
+    /**
+     * 使用mybatispuls
+     * 方法参数注入： 直接将依赖作为方法参数，Spring Boot将根据类型进行自动注入。这种方式在方法级别进行注入。
+     */
     private final IncomeService incomeService;
 
     @Autowired
@@ -53,6 +59,15 @@ public class IncomeController {
     @ResponseBody
     public double SumReceipt(){
         return incomeService.SumReceipt();
+    }
+    /**
+     * 查询总预收
+     * @return
+     */
+    @GetMapping("/count")
+    @ResponseBody
+    public double SumBudget(){
+        return incomeService.SumBudget();
     }
 
     /**

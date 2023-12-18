@@ -11,7 +11,7 @@
       active-text-color="#ffd04b"
       router
       >
-      <el-menu-item index="/Home">
+      <el-menu-item index="/Home/StatManage">
         <i class="el-icon-s-home"></i>
         <span slot="title">首页 </span>
       </el-menu-item>
@@ -22,14 +22,6 @@
       <el-menu-item index="/Home/PayManage">
         <i class="el-icon-s-shop"></i>
         <span slot="title">支出管理</span>
-      </el-menu-item>
-      <el-menu-item index="/Home/StatManage">
-        <i class="el-icon-s-data"></i>
-        <span slot="title">班费统计</span>
-      </el-menu-item>
-      <el-menu-item index="/Home/test">
-        <i class="el-icon-edit"></i>
-        <span slot="title">测试页</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -68,7 +60,7 @@ export default {
 }
 
 .el-menu {
-  background-color: #304156 !important;
+  background-color: #304156;
   border-right: #304156 !important;
 }
 

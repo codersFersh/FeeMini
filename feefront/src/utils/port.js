@@ -1,6 +1,23 @@
 import * as request from "@/utils/request";
 // import * as request
 
+//用户登录
+export function LoginUser(params) {
+    return request.POST2(
+        '/user/login',
+        params
+    )
+}
+
+//用户注销
+export function Logout(params) {
+    return request.POST2(
+        '/user/logout',
+        params
+    )
+}
+
+
 //查询所有收入信息
 export function IncomeAll() {
     return request.GET(
@@ -51,6 +68,13 @@ export function SumReceipt() {
 export function SumPayout() {
     return request.GET(
         '/pay/sum',
+    )
+}
+
+// 获取总预收
+export function SumBudget() {
+    return request.GET(
+        '/income/count',
     )
 }
 

@@ -44,6 +44,13 @@ public interface IncomeMapper extends BaseMapper<Income> {
     double SumReceipt();
 
     /**
+     * 获取总预收
+     * @return
+     */
+    @Select("select sum(budget) from income")
+    double SumBudget();
+
+    /**
      * 新增
      */
     @Insert("insert into income(title,budget,classsize,descr) values(#{title},#{budget},#{classsize},#{descr})")

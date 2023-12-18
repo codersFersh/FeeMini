@@ -40,7 +40,8 @@ export default {
     return {
       asideWidth: '121px',
       isAsideCollapse: false,
-      showIcon: true,      //控制显示的图标
+      //控制显示的图标
+      showIcon: true,      
     };
   },
   methods: {
@@ -90,5 +91,11 @@ body>.el-container {
 
 .el-menu {
   border-right: solid 1px #D3DCE6;
+}
+
+.el-menu-item, .el-submenu__title {
+    height: 60px !important;
+    line-height: 60px !important;
+    list-style: none;
 }
 </style>
