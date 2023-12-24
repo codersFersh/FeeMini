@@ -44,6 +44,7 @@ export default {
 <style>
 .left-aside {
   margin-top: 60px;
+  max-width: 121px;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {

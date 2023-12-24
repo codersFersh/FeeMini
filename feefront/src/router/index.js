@@ -7,6 +7,7 @@ import PayAdd from '@/views/pay/PayAdd.vue';
 import IncomeManage from '@/views/income/IncomeManage.vue';
 import IncomeAdd from '@/views/income/IncomeAdd.vue';
 import StatManage from '@/views/stat/StatManage.vue';
+import DetailManage from '@/views/detail/DetailManage.vue';
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [{
                 path: 'IncomeManage',
                 component: () =>
                     import ('@/views/income/IncomeManage.vue'),
+            },
+            {
+                path: 'DetailManage',
+                component: () =>
+                    import ('@/views/detail/DetailManage.vue'),
             },
             {
                 path: 'StatManage',
@@ -65,6 +71,11 @@ const routes = [{
         path: '/Login',
         name: 'Login',
         component: Login,
+    },
+    {
+        path: '/DetailManage',
+        name: 'DetailManage',
+        component: DetailManage,
     },
 ];
 

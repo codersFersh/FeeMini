@@ -10,11 +10,11 @@
             </el-table-column>
             <el-table-column prop="id" label="编号" width="80">
             </el-table-column>
-            <el-table-column prop="title" label="项目名称" width="150">
+            <el-table-column prop="title" label="名称" width="150">
             </el-table-column>
             <el-table-column prop="origindate" label="创建时间" width="180">
             </el-table-column>
-            <el-table-column prop="budget" label="预收金额" width="150">
+            <el-table-column prop="budget" label="项目金额" width="120">
             </el-table-column>
             <el-table-column prop="receipt" label="已收金额" width="120">
             </el-table-column>
@@ -22,6 +22,28 @@
             </el-table-column>
             <el-table-column prop="paysize" label="缴费人数" width="120">
             </el-table-column>
+
+            <el-table-column prop="status" label="状态" width="100"
+              :filters="[{ text: '待处理', value: 0 }, { text: '进行中', value: 1 }, { text: '已完成', value: 2 }]"
+              :filter-method="filterTag1" filter-placement="bottom-end">
+              <template slot-scope="scope">
+                <el-tag v-if="scope.row.status === 0" type="info" disable-transitions>待处理</el-tag>
+                <el-tag v-else-if="scope.row.status === 1" type="primary" disable-transitions>进行中</el-tag>
+                <el-tag v-else type="success" disable-transitions>已完成</el-tag>
+              </template>
+            </el-table-column>
+
+            <el-table-column prop="state" label="类型" width="100"
+              :filters="[{ text: '支出收入', value1: 0 }, { text: '非支出收入', value1: 1 }]" :filter-method="filterTag2"
+              filter-placement="bottom-end">
+              <template slot-scope="scope">
+                <el-tag v-if="scope.row.state === 0" type="warning" disable-transitions>支出收入</el-tag>
+                <el-tag v-else type="danger" disable-transitions>非支出收入</el-tag>
+              </template>
+            </el-table-column>
+
+
+
             <!-- 备注描述列 -->
             <el-table-column label="备注描述" width="120" type="expand">
               <template slot-scope="scope">
@@ -35,16 +57,17 @@
             </el-table-column>
 
             <!-- 搜索、编辑、删除 -->
-            <el-table-column fixed="right" width="195">
+            <el-table-column fixed="right" width="220">
               <template slot="header" slot-scope="scope">
-                <el-input v-model="title" size="mini" class="search_input" placeholder="输入项目名称搜索" shadow="always">
+                <el-input v-model="title" size="mini" class="search_input" placeholder="输入名称搜索" shadow="always">
                   <template slot="append">
                     <el-button type="primary" size="mini" class="search_button" @click="search1" plain>搜索</el-button>
                   </template>
                 </el-input>
               </template>
               <template slot-scope="scope">
-                <el-button size="mini" type="warning" @click="handleEdit(scope.row)">编辑</el-button>
+                <el-button size="mini" type="info" @click="handleInfo(scope.row, true)">详细</el-button>
+                <el-button size="mini" type="warning" @click="handleEdit(scope.row), drawer = true">编辑</el-button>
                 <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
               </template>
             </el-table-column>
@@ -52,7 +75,7 @@
 
           <!-- 分页 -->
           <el-row :gutter="20">
-            <el-col :span="4">             
+            <el-col :span="4">
             </el-col>
             <el-col :span="16">
               <div class="grid-content bg-purple">
@@ -76,8 +99,9 @@
           <IncomeAdd></IncomeAdd>
         </el-tab-pane>
       </el-tabs>
+      <!-- 编辑 -->
       <div>
-        <el-dialog title="编辑班费" :visible.sync="postedit" width="45%">
+        <el-drawer title="收入编辑" :visible.sync="drawer" size="40%">
           <el-form :model="formedit" :rules="rules" ref="formedit" style="width: 100%;">
             <el-row>
               <el-col :span="12">
@@ -86,8 +110,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="项目名称" :label-width="formLabelWidth" prop="title">
-                  <el-input v-model="formedit.title" placeholder="请输入修改的项目名称" clearable style="width: 220px;"></el-input>
+                <el-form-item label="名称" :label-width="formLabelWidth" prop="title">
+                  <el-input v-model="formedit.title" placeholder="请输入修改的名称" clearable style="width: 220px;"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -100,7 +124,7 @@
               <el-col :span="12">
                 <el-form-item label="备注描述:" :label-width="formLabelWidth" prop="descr">
                   <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入内容" clearable
-                    v-model="formedit.descr" show-word-limit maxlength="200">
+                    v-model="formedit.descr" show-word-limit maxlength="200" style="width: 220px;">
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -129,13 +153,23 @@
                 </el-form-item>
               </el-col>
             </el-row>
-
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="缴费状态:" :label-width="formLabelWidth" prop="status">
+                  <el-select v-model="formedit.status" style="width: 220px;">
+                    <el-option label="待处理" :value="0"></el-option>
+                    <el-option label="进行中" :value="1"></el-option>
+                    <el-option label="已完成" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="postedit = false">取 消</el-button>
+          <div>
+            <el-button @click="drawer = false">取 消</el-button>
             <el-button native-type="submit" @click="edit()">确 定</el-button>
           </div>
-        </el-dialog>
+        </el-drawer>
       </div>
     </div>
   </div>
@@ -149,10 +183,12 @@ import { searchTitle } from "@/utils/port";
 import { IncomeEdit } from "@/utils/port";
 import { IncomeDel } from "@/utils/port";
 import IncomeAdd from '@/views/income/IncomeAdd.vue';
+// import DetailManage from '@/views/detail/DetailManage.vue';
 export default {
   components: { IncomeAdd },
   data() {
     return {
+      IncomeId: '',
       activeTab: 'tab1',
       //编辑弹窗
       //宽度设置
@@ -165,20 +201,27 @@ export default {
       title: "",
 
 
+      drawer: false,
+      table: false,
+      innerDrawer: false,
+
+
+
       //编辑表对应数据
       formedit: {
         title: "",
         budget: "",
         receipt: "",
         paysize: "",
-        descr: ""
+        descr: "",
+        status: ""
       },
 
 
       rules: {
 
         //表单验证规则
-        //项目名称
+        //名称
         title: [
           { required: true, message: "请填写此次班级收取班费的目的", trigger: "blur" },
           {
@@ -202,7 +245,7 @@ export default {
         receipt: [
           {
             required: true,
-            pattern: /^(([1-9]\d{0,4})|50000)(\.\d{1,2})?$/,
+            pattern: /^(([0-9]\d{0,4})|50000)(\.\d{1,2})?$/,
             message: "请输入合法的金额，最大为50000，输入整数",
             trigger: "change"
           },
@@ -225,6 +268,7 @@ export default {
           message: "请输入大于等于0且小于等于30的整数的人数",
           trigger: "change"
         }],
+
 
 
       },
@@ -253,6 +297,15 @@ export default {
   },
   methods: {
 
+    handleInfo(row, table = true) {
+      this.$router.push({
+        path: "/Home/DetailManage",
+        query: { IncomeId: row.id }
+      });
+      this.IncomeId = row.id;
+      this.table = true;
+    },
+
     // 改变每页大小的回调
     handleSizeChange(val) {
       this.pageSize = val;
@@ -272,6 +325,11 @@ export default {
       this.pageData = this.queryByPage();
     },
     // 实现分页的方法
+    //slice() 方法返回一个新的数组对象，
+    //这一对象是一个由 begin 和 end 决定的原数组的浅拷贝
+    //（包括 begin，不包括end）。原始数组不会被改变。
+    //当展示第1页并每页10条数据时：应当截取索引0-9的数据，
+    //即tableData.slice(0, 10) => currentPage = 1;pageSize = 10。
     queryByPage() {
       // 起始位置 = (当前页 - 1) x 每页的大小
       const start = (this.currentPage - 1) * this.pageSize;
@@ -292,13 +350,21 @@ export default {
         title: '注意，新增操作',
         message: '编号和创建时间数据库自动生成，无需手动添加',
         showClose: false,
-        duration:2000
+        duration: 2000
       });
 
       //刷新table
       this.fetchData()
 
     },
+
+    filterTag1(value, row) {
+      return row.status === value;
+    },
+    filterTag2(value1, row) {
+      return row.state === value1;
+    },
+
 
     //模糊查询
     search1() {

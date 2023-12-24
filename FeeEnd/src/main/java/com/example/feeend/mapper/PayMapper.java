@@ -14,7 +14,7 @@ public interface PayMapper extends BaseMapper<Pay> {
     /**
      * 获取所有支出信息
      */
-    @Select("select * from pay")
+    @Select("select * from pay ORDER BY id DESC")
     List<Pay> PayAll();
 
 
@@ -45,7 +45,24 @@ public interface PayMapper extends BaseMapper<Pay> {
     /**
      * 新增
      */
-    @Insert("insert into pay(item,payout,notes)values (#{item},#{payout},#{notes})")
+    @Insert("insert into pay" +
+            "(incomeid," +
+            "item," +
+            "payout," +
+            "units," +
+            "unitprice," +
+            "approver," +
+            "type," +
+            "notes)" +
+            "values" +
+            " (#{incomeid}," +
+            "#{item}," +
+            "#{payout}," +
+            "#{units}," +
+            "#{unitprice}," +
+            "#{approver}," +
+            "#{type}," +
+            "#{notes})")
     int PayAdd(Pay pay);
 
     /**
@@ -53,7 +70,15 @@ public interface PayMapper extends BaseMapper<Pay> {
      * @param pay
      * @return
      */
-    @Update("update pay set item=#{item},payout=#{payout},notes=#{notes} where id=#{id}")
+    @Update("update pay set" +
+            " incomeid=#{incomeid}," +
+            "item=#{item}," +
+            "payout=#{payout}," +
+            "units=#{units}," +
+            "unitprice=#{unitprice}," +
+            "approver=#{approver}," +
+            "notes=#{notes} " +
+            "where id=#{id}")
     int PayEdit(Pay pay);
 
 

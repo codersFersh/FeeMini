@@ -117,3 +117,44 @@ export function PayDel(params) {
         params
     )
 }
+
+
+//获取学生
+export function StudentAll() {
+    return request.GET(
+        '/stu/all'
+    )
+}
+
+
+//获取一条details详细数据记录
+export function DetailsByIncomeId(params) {
+    return request.GET(
+        '/details/incomeid',
+        params
+    )
+}
+
+
+//修改Details记录
+export function DetailsEdit(params) {
+    return request.POST2(
+        '/details/edit',
+        params
+    )
+}
+
+
+// 获取已完成缴费状态
+export function SuccessStatus() {
+    return request.GET(
+        '/income/success'
+    )
+}
+
+// 获取未完成已经待处理缴费状态
+export function WarnStatus() {
+    return request.GET(
+        '/income/warning'
+    )
+}

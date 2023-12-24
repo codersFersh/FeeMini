@@ -11,13 +11,38 @@
       </el-row>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="项目名称：" :label-width="formLabelWidth" prop="item">
-            <el-input v-model="ruleForm.item" placeholder="请输入项目名称" clearable style="width: 220px;"></el-input>
+          <el-form-item label="名称：" :label-width="formLabelWidth" prop="item">
+            <el-input v-model="ruleForm.item" placeholder="请输入名称" clearable style="width: 220px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="支出金额：" :label-width="formLabelWidth" prop="payout">
             <el-input v-model="ruleForm.payout" placeholder="请输入预收金额" clearable style="width: 220px;"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="类型：" :label-width="formLabelWidth" prop="type">
+            <el-select v-model="ruleForm.type" disabled style="width: 220px;">
+              <el-option label="收支联系" :value="0"></el-option>
+              <el-option label="收支不联系" :value="1"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>      
+      </el-row>
+      <el-row>
+        <el-col :span="6">
+          <el-form-item label="单位数量：" :label-width="formLabelWidth" prop="units">
+            <el-input v-model="ruleForm.units" placeholder="请输入单位数量" clearable style="width: 220px;"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="单项价格：" :label-width="formLabelWidth" prop="unitprice">
+            <el-input v-model="ruleForm.unitprice" placeholder="请输入单项价格" clearable style="width: 220px;"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="审批人：" :label-width="formLabelWidth" prop="approver">
+            <el-input v-model="ruleForm.approver" placeholder="请输入审批人" clearable style="width: 220px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
@@ -57,6 +82,10 @@ export default {
       ruleForm: {
         item: "",
         payout: "",
+        units: "",
+        unitprice: "",
+        approver: "",
+        type: 1,
         notes: "",
       },
       //获取余额
@@ -65,7 +94,7 @@ export default {
       rules: {
 
         //表单验证规则
-        //项目名称
+        //名称
         item: [
           { required: true, message: "请填写此次班级收取班费的目的", trigger: "blur" },
           {
@@ -83,16 +112,15 @@ export default {
             pattern: /^(([1-9]\d{0,4})|50000)(\.\d{1,2})?$/,
             message: "请输入合法的金额，最大为50000，输入整数",
             trigger: "change",
-          },
+          }
+        ],
+
+        // 审批人
+        approver: [
           {
-            validator: (rule, value, callback) => {
-              if (value > this.surplus) {
-                callback(new Error("支出金额不能大于班费余额"));
-              } else {
-                callback();
-              }
-            },
-            trigger: "change",
+            required: true,
+            message: "审批人不能为空",
+            trigger: "blur"
           },
         ],
 

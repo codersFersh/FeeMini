@@ -16,7 +16,7 @@ public interface IncomeMapper extends BaseMapper<Income> {
     /**
      * 获取所有支出收入信息
      */
-    @Select("select * from income")
+    @Select("select * from income ORDER BY id DESC")
     List<Income> IncomeAll();
 
 
@@ -53,7 +53,7 @@ public interface IncomeMapper extends BaseMapper<Income> {
     /**
      * 新增
      */
-    @Insert("insert into income(title,budget,classsize,descr) values(#{title},#{budget},#{classsize},#{descr})")
+    @Insert("insert into income(title,budget,classsize,status,state,descr) values(#{title},#{budget},#{classsize},#{status},#{state},#{descr})")
     int IncomeAdd (Income income);
 
     /**
@@ -64,11 +64,36 @@ public interface IncomeMapper extends BaseMapper<Income> {
             "budget=#{budget}," +
             "receipt=#{receipt}," +
             "paysize=#{paysize}, " +
+            "status=#{status}," +
             "descr=#{descr} " +
             "where" +
             " id=#{id}")
     int IncomeEdit(Income income);
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @Delete("delete from income where id =#{id}")
     int IncomeDel(@Param("id") Integer id);
+
+
+    /**
+     * 获取状态为未完成的班级收入记录
+     * @param
+     * @return
+     */
+    @Select("select * from income where status != 2")
+    List<Income> WarnStatus ();
+
+    /**
+     * 已完成缴费
+     * @param
+     * @return
+     */
+
+    @Select("select * from income where status = 2")
+    List<Income> SuccessStatus();
+
 }

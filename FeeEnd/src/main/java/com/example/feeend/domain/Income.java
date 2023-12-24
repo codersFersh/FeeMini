@@ -15,13 +15,19 @@ public class Income {
     private Integer classsize;
 
     private Integer paysize;
+    private Integer status;
+    private Integer state;
 
     private String descr;
+
+
+
+
 
     public Income() {
     }
 
-    public Income(Integer id, String title, Date origindate, Double budget, Double receipt, Integer classsize, Integer paysize, String descr) {
+    public Income(Integer id, String title, Date origindate, Double budget, Double receipt, Integer classsize, Integer paysize, Integer status, Integer state, String descr) {
         this.id = id;
         this.title = title;
         this.origindate = origindate;
@@ -29,6 +35,8 @@ public class Income {
         this.receipt = receipt;
         this.classsize = classsize;
         this.paysize = paysize;
+        this.status = status;
+        this.state = state;
         this.descr = descr;
     }
 
@@ -88,6 +96,22 @@ public class Income {
         this.paysize = paysize;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     public String getDescr() {
         return descr;
     }
@@ -106,6 +130,8 @@ public class Income {
                 ", receipt=" + receipt +
                 ", classsize=" + classsize +
                 ", paysize=" + paysize +
+                ", status=" + status +
+                ", state=" + state +
                 ", descr='" + descr + '\'' +
                 '}';
     }

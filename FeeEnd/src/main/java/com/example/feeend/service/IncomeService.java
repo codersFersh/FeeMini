@@ -84,4 +84,22 @@ public class IncomeService extends ServiceImpl<IncomeMapper, Income> {
             return false;
         }
     }
+
+    /**
+     * 获取状态为未完成的班费记录
+     * @param
+     * @return
+     */
+    public List<Income> WarnStatus(){
+        return baseMapper.WarnStatus();
+    }
+
+    /**
+     * 已完成缴费
+     * @param
+     * @return
+     */
+    public List<Income> SuccessStatus(){
+        return baseMapper.SuccessStatus();
+    }
 }

@@ -35,8 +35,7 @@ import leftAside from './leftAside.vue';
 
 export default {
   components: { topHeader, leftAside },
-  name: 'Home',
-  data() {
+  name: 'Home',  data() {
     return {
       asideWidth: '121px',
       isAsideCollapse: false,

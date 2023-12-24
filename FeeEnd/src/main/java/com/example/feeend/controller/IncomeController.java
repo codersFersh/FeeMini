@@ -85,8 +85,6 @@ public class IncomeController {
     @PostMapping("/edit")
     @ResponseBody
     public boolean IncomeEdit(@RequestBody Income income) {
-
-
         return incomeService.IncomeEdit(income);
     }
 
@@ -106,4 +104,25 @@ public class IncomeController {
         }
     }
 
+    /**
+     * 获取未完成和待处理的班费收入信息。
+     * @param
+     * @return
+     */
+    @GetMapping("/warning")
+    @ResponseBody
+    public List<Income> WarnStatus(){
+        return incomeService.WarnStatus();
+    }
+
+    /**
+     * 获取已经完成的缴费记录
+     * @param
+     * @return
+     */
+    @GetMapping("/success")
+    @ResponseBody
+    public List<Income> SuccessStatus(){
+        return incomeService.SuccessStatus();
+    }
 }

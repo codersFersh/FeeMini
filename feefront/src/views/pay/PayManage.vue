@@ -10,14 +10,30 @@
             </el-table-column>
             <el-table-column prop="id" label="编号" width="80">
             </el-table-column>
-            <el-table-column prop="item" label="项目名称" width="180">
+            <el-table-column prop="incomeid" label="缴费编号" width="80">
             </el-table-column>
-            <el-table-column prop="costtime" label="创建时间" width="220">
+            <el-table-column prop="item" label="名称" width="120">
             </el-table-column>
-            <el-table-column prop="payout" label="支出金额" width="180">
+            <el-table-column prop="costtime" label="创建时间" width="200">
+            </el-table-column>
+            <el-table-column prop="payout" label="支出金额" width="120">
+            </el-table-column>
+            <el-table-column prop="units" label="单位数量" width="120">
+            </el-table-column>
+            <el-table-column prop="unitprice" label="单个价格" width="120">
+            </el-table-column>
+            <el-table-column prop="approver" label="审批人" width="120">
+            </el-table-column>
+            <el-table-column prop="type" label="类型" width="100"
+              :filters="[{ text: '收支联系', value1: 0 }, { text: '收支不联系', value1: 1 }]" :filter-method="filterTag2"
+              filter-placement="bottom-end">
+              <template slot-scope="scope">
+                <el-tag v-if="scope.row.type === 0" type="warning" disable-transitions>收支联系</el-tag>
+                <el-tag v-else type="danger" disable-transitions>收支不联系</el-tag>
+              </template>
             </el-table-column>
             <!-- 备注描述列 -->
-            <el-table-column label="备注描述" width="200" type="expand">
+            <el-table-column label="备注描述" width="180" type="expand">
               <template slot-scope="scope">
                 <!-- 备注描述的显示内容 -->
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -31,7 +47,7 @@
             <!-- 搜索、编辑、删除 -->
             <el-table-column fixed="right" width="195">
               <template slot="header" slot-scope="scope">
-                <el-input v-model="item" size="mini" class="search_input" placeholder="输入项目名称搜索" shadow="always">
+                <el-input v-model="item" size="mini" class="search_input" placeholder="输入名称搜索" shadow="always">
                   <template slot="append">
                     <el-button type="primary" size="mini" class="search_button" @click="search1" plain>搜索</el-button>
                   </template>
@@ -69,7 +85,7 @@
         </el-tab-pane>
       </el-tabs>
       <div>
-        <el-dialog title="编辑班费" :visible.sync="postedit" width="45%">
+        <el-dialog title="编辑班费支出" :visible.sync="postedit" width="45%">
           <el-form :model="formedit" :rules="rules" ref="formedit" style="width: 100%;">
             <el-row>
               <el-col :span="12">
@@ -78,20 +94,40 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="项目名称" :label-width="formLabelWidth" prop="item">
-                  <el-input v-model="formedit.item" placeholder="请输入修改的项目名称" clearable style="width: 220px;"></el-input>
+                <el-form-item label="缴费编号：" :label-width="formLabelWidth" prop="incomeid">
+                  <el-input v-model="formedit.incomeid" clearable disabled style="width: 220px;"></el-input>
                 </el-form-item>
               </el-col>
-            </el-row>
-            <el-row>
               <el-col :span="12">
-                <el-form-item label="创建时间:" :label-width="formLabelWidth" prop="costtime">
+                <el-form-item label="创建时间：" :label-width="formLabelWidth" prop="costtime">
                   <el-input v-model="formedit.costtime" disabled clearable style="width: 220px;"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="支出金额:" :label-width="formLabelWidth" prop="payout">
+                <el-form-item label="名称：" :label-width="formLabelWidth" prop="item">
+                  <el-input v-model="formedit.item" placeholder="请输入修改的名称" clearable style="width: 220px;"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>            
+              <el-col :span="12">
+                <el-form-item label="支出金额：" :label-width="formLabelWidth" prop="payout">
                   <el-input v-model="formedit.payout" clearable style="width: 220px;"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="单位数量：" :label-width="formLabelWidth" prop="units">
+                  <el-input v-model="formedit.units" clearable style="width: 220px;"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="单项价格：" :label-width="formLabelWidth" prop="unitprice">
+                  <el-input v-model="formedit.unitprice" clearable style="width: 220px;"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="审批人：" :label-width="formLabelWidth" prop="approver">
+                  <el-input v-model="formedit.approver" clearable style="width: 220px;"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -99,7 +135,7 @@
               <el-col :span="12">
                 <el-form-item label="备注描述:" :label-width="formLabelWidth" prop="notes">
                   <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入内容" clearable
-                    v-model="formedit.notes" show-word-limit maxlength="200">
+                    v-model="formedit.notes" show-word-limit maxlength="200" style="width: 220px;">
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -152,6 +188,9 @@ export default {
       formedit: {
         item: "",
         payout: "",
+        units: "",
+        unitprice: "",
+        approver: "",
         notes: ""
       },
 
@@ -160,7 +199,7 @@ export default {
       rules: {
 
         //表单验证规则
-        //项目名称
+        //名称
         item: [
           { required: true, message: "请填写此次班级收取班费的目的", trigger: "blur" },
           {
@@ -187,18 +226,15 @@ export default {
             pattern: /^(([1-9]\d{0,4})|50000)(\.\d{1,2})?$/,
             message: "请输入合法的金额，最大为50000，输入整数",
             trigger: "change"
-          },
+          },         
+        ],
+         // 审批人
+         approver: [
           {
-            validator: (rule, value, callback) => {
-              const budgetValue = this.formedit.budget;
-              if (parseFloat(value) > parseFloat(budgetValue)) {
-                callback(new Error("已缴班费不能大于预收班费"));
-              } else {
-                callback();
-              }
-            },
-
-          }
+            required: true,
+            message: "审批人不能为空",
+            trigger: "blur"
+          },
         ],
       },
 
@@ -247,6 +283,11 @@ export default {
       this.pageData = this.queryByPage();
     },
     // 实现分页的方法
+    //slice() 方法返回一个新的数组对象，
+    //这一对象是一个由 begin 和 end 决定的原数组的浅拷贝
+    //（包括 begin，不包括end）。原始数组不会被改变。
+    //当展示第1页并每页10条数据时：应当截取索引0-9的数据，
+    //即tableData.slice(0, 10) => currentPage = 1;pageSize = 10。
     queryByPage() {
       // 起始位置 = (当前页 - 1) x 每页的大小
       const start = (this.currentPage - 1) * this.pageSize;
@@ -274,6 +315,10 @@ export default {
       this.fetchData()
       //获取余额
       this.SumSurplus()
+    },
+
+    filterTag2(value1, row) {
+      return row.state === value1;
     },
 
     //模糊查询

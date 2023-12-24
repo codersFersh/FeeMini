@@ -3,8 +3,8 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <el-row>
         <el-col :span="6">
-          <el-form-item label="项目名称：" :label-width="formLabelWidth" prop="title">
-            <el-input v-model="ruleForm.title" placeholder="请输入项目名称" clearable style="width: 220px;"></el-input>
+          <el-form-item label="名称：" :label-width="formLabelWidth" prop="title">
+            <el-input v-model="ruleForm.title" placeholder="请输入名称" clearable style="width: 220px;"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
@@ -22,6 +22,25 @@
             <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入内容" clearable
               v-model="ruleForm.descr" show-word-limit maxlength="200" style="width: 220px;">
             </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">
+          <el-form-item label="缴费状态：" :label-width="formLabelWidth" prop="status">
+            <el-select v-model="ruleForm.status" disabled style="width: 220px;">
+              <el-option label="待处理" :value="0"></el-option>
+              <el-option label="进行中" :value="1"></el-option>
+              <el-option label="已完成" :value="2"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="缴费类型：" :label-width="formLabelWidth" prop="state">
+            <el-select v-model="ruleForm.state"  style="width: 220px;">
+              <el-option label="支出收入" :value="0"></el-option>
+              <el-option label="非支出性收入" :value="1"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -50,6 +69,8 @@ export default {
         title: "",
         budget: "",
         classsize: "30",
+        status: 0,
+        state:0,
         descr: "",
       },
       // a: 0,
@@ -57,7 +78,7 @@ export default {
       rules: {
 
         //表单验证规则
-        //项目名称
+        //名称
         title: [
           { required: true, message: "请填写此次班级收取班费的目的", trigger: "blur" },
           {
