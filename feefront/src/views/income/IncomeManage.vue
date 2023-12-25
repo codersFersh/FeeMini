@@ -34,11 +34,11 @@
             </el-table-column>
 
             <el-table-column prop="state" label="类型" width="100"
-              :filters="[{ text: '支出收入', value1: 0 }, { text: '非支出收入', value1: 1 }]" :filter-method="filterTag2"
+              :filters="[{ text: '预支收入', value1: 0 }, { text: '预存收入', value1: 1 }]" :filter-method="filterTag2"
               filter-placement="bottom-end">
               <template slot-scope="scope">
-                <el-tag v-if="scope.row.state === 0" type="warning" disable-transitions>支出收入</el-tag>
-                <el-tag v-else type="danger" disable-transitions>非支出收入</el-tag>
+                <el-tag v-if="scope.row.state === 0" type="warning" disable-transitions>预支收入</el-tag>
+                <el-tag v-else type="danger" disable-transitions>预存收入</el-tag>
               </template>
             </el-table-column>
 
@@ -132,7 +132,7 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="预收金额:" :label-width="formLabelWidth" prop="budget">
-                  <el-input v-model="formedit.budget" clearable style="width: 220px;"></el-input>
+                  <el-input v-model="formedit.budget" clearable style="width: 220px;" ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
@@ -156,7 +156,7 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="缴费状态:" :label-width="formLabelWidth" prop="status">
-                  <el-select v-model="formedit.status" style="width: 220px;">
+                  <el-select v-model="formedit.status" style="width: 220px;" >
                     <el-option label="待处理" :value="0"></el-option>
                     <el-option label="进行中" :value="1"></el-option>
                     <el-option label="已完成" :value="2"></el-option>
@@ -433,6 +433,17 @@ export default {
         })
       } catch (err) { }
     }
+  },
+
+  watch: {
+    'formedit.receipt'(newReceipt) {
+      // 检查receipt是否等于budget
+      if (newReceipt === this.formedit.budget) {
+        this.formedit.status = 1; // 当receipt等于budget时，将status设置为“进行中”
+      } else if (newReceipt > 0) {
+        this.formedit.status = 2; // 当receipt大于0时，将status设置为“已完成”
+      }
+    },
   },
 }
 

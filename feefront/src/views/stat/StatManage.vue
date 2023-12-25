@@ -59,7 +59,7 @@
       </el-row>
     </div>
     <div>
-      <el-dialog title="未完成的缴费信息列表" :visible.sync="warning" width="80%">
+      <!-- <el-dialog title="未完成的缴费信息列表" :visible.sync="warning" width="80%">
         <el-table :data="pageData" style="width: 100%; margin: 0 auto; border-radius: 2px; border-bottom: 0px;"
           :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }" max-height="550px"
           border>
@@ -90,10 +90,8 @@
           </el-table-column>
 
 
-          <!-- 备注描述列 -->
           <el-table-column label="备注描述" width="120" type="expand">
             <template slot-scope="scope">
-              <!-- 备注描述的显示内容 -->
               <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="备注描述内容：" style="margin-left: 30px;">
                   <span>{{ scope.row.descr }}</span>
@@ -103,7 +101,6 @@
           </el-table-column>
         </el-table>
 
-        <!-- 分页 -->
         <el-row :gutter="20">
           <el-col :span="4">
           </el-col>
@@ -120,7 +117,7 @@
             </div>
           </el-col>
         </el-row>
-      </el-dialog>
+      </el-dialog> -->
     </div>
   </div>
 </template>
@@ -164,75 +161,100 @@ export default {
     }
   },
   methods: {
-    // 改变每页大小的回调
-    handleSizeChange(val) {
-      this.pageSize = val;
-      this.pageData = this.queryByPage();
-    },
-    // 改变当前页的回调
-    handleCurrentChange(val) {
-      this.currentPage = val;
-      this.pageData = this.queryByPage();
-    },
-    // 获取全部数据
-    async fetchData() {
-      // 请求后端数据
-      const data = await WarnStatus();
-      this.tableData = data;
-      this.pageTotal = data.length;
-      this.pageData = this.queryByPage();
-    },
-    // 实现分页的方法
-    //slice() 方法返回一个新的数组对象，
-    //这一对象是一个由 begin 和 end 决定的原数组的浅拷贝
-    //（包括 begin，不包括end）。原始数组不会被改变。
-    //当展示第1页并每页10条数据时：应当截取索引0-9的数据，
-    //即tableData.slice(0, 10) => currentPage = 1;pageSize = 10。
-    queryByPage() {
-      // 起始位置 = (当前页 - 1) x 每页的大小
-      const start = (this.currentPage - 1) * this.pageSize;
-      // 结束位置 = 当前页 x 每页的大小
-      const end = this.currentPage * this.pageSize;
-      return this.tableData.slice(start, end);
-    },
+    // // 改变每页大小的回调
+    // handleSizeChange(val) {
+    //   this.pageSize = val;
+    //   this.pageData = this.queryByPage();
+    // },
+    // // 改变当前页的回调
+    // handleCurrentChange(val) {
+    //   this.currentPage = val;
+    //   this.pageData = this.queryByPage();
+    // },
+    // // 获取全部数据
+    // async fetchData() {
+    //   // 请求后端数据
+    //   const data = await WarnStatus();
+    //   this.tableData = data;
+    //   this.pageTotal = data.length;
+    //   this.pageData = this.queryByPage();
+    // },
+    // // 实现分页的方法
+    // //slice() 方法返回一个新的数组对象，
+    // //这一对象是一个由 begin 和 end 决定的原数组的浅拷贝
+    // //（包括 begin，不包括end）。原始数组不会被改变。
+    // //当展示第1页并每页10条数据时：应当截取索引0-9的数据，
+    // //即tableData.slice(0, 10) => currentPage = 1;pageSize = 10。
+    // queryByPage() {
+    //   // 起始位置 = (当前页 - 1) x 每页的大小
+    //   const start = (this.currentPage - 1) * this.pageSize;
+    //   // 结束位置 = 当前页 x 每页的大小
+    //   const end = this.currentPage * this.pageSize;
+    //   return this.tableData.slice(start, end);
+    // },
 
 
     filterTag(value, row) {
       return row.status === value;
     },
 
+    sum() {
+      SumReceipt().then(res => {
+        this.value1 = res
+        SumPayout().then(res => {
+          this.value3 = this.value1 - res
+        })
+      })
+      SumPayout().then(res => {
+        this.value2 = res
+      })
+
+      SumBudget().then(res => {
+        this.value4 = res
+        SumReceipt().then(res => {
+          this.value5 = this.value4 - res
+        })
+      })
+    },
+
+
+    async checkAndOpen() {
+    try {
+      const warnStatusData = await WarnStatus();
+      if (warnStatusData.length > 0) {
+        this.open(warnStatusData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  // map 用于在数组的每个元素上调用的函数，
+  //并将结果组成一个新数组的方法。这个新数组将包含每个元素经过函数处理后的结果
+
+  open(dataList) {
+    // 使用 map 来遍历数据列表
+  const messages = dataList.map(data => `编号： ${data.id}，名称： ${data.title}`).join('<br>');
+  this.$notify.warning({
+    title: '注意！有缴费记录未完成，请及时处理：',
+    dangerouslyUseHTMLString: true,
+    message: `<br>${messages}`,
+    showClose: false,
+  });
+},
+
   },
   mounted() {
 
+    this.checkAndOpen();
 
   },
   watch: {
 
   },
   created() {
-    // this.tableData()
-    SumReceipt().then(res => {
-      this.value1 = res
-      SumPayout().then(res => {
-        this.value3 = this.value1 - res
-      })
-    })
-    SumPayout().then(res => {
-      this.value2 = res
-    })
-
-    SumBudget().then(res => {
-      this.value4 = res
-      SumReceipt().then(res => {
-        this.value5 = this.value4 - res
-      })
-    })
-
-    this.warning = true;
     setTimeout(() => {
-      this.fetchData();
-      
-    }, 500);
+      this.sum();
+    }, 1000);
 
   },
   computed: {

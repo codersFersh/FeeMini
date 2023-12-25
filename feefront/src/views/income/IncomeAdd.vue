@@ -38,8 +38,8 @@
         <el-col :span="6">
           <el-form-item label="缴费类型：" :label-width="formLabelWidth" prop="state">
             <el-select v-model="ruleForm.state"  style="width: 220px;">
-              <el-option label="支出收入" :value="0"></el-option>
-              <el-option label="非支出性收入" :value="1"></el-option>
+              <el-option label="预支收入" :value="0"></el-option>
+              <el-option label="预存收入" :value="1"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
