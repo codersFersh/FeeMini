@@ -20,8 +20,8 @@
         <span slot="title">收入管理</span>
       </el-menu-item>
       <el-menu-item index="/Home/Warning">
-        <i class="el-icon-s-finance"></i>
-        <span slot="title">未缴费列表</span>
+        <i class="el-icon-bell"></i>
+        <span slot="title">待处理项</span>
       </el-menu-item>    
       <el-menu-item index="/Home/PayManage">
         <i class="el-icon-s-shop"></i>
