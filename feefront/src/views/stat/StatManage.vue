@@ -58,67 +58,6 @@
         </el-col>
       </el-row>
     </div>
-    <div>
-      <!-- <el-dialog title="未完成的缴费信息列表" :visible.sync="warning" width="80%">
-        <el-table :data="pageData" style="width: 100%; margin: 0 auto; border-radius: 2px; border-bottom: 0px;"
-          :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }" max-height="550px"
-          border>
-          <el-table-column fixed type="index" width="50" label="序号">
-          </el-table-column>
-          <el-table-column prop="id" label="编号" width="80">
-          </el-table-column>
-          <el-table-column prop="title" label="名称" width="150">
-          </el-table-column>
-          <el-table-column prop="origindate" label="创建时间" width="180">
-          </el-table-column>
-          <el-table-column prop="budget" label="项目金额" width="150">
-          </el-table-column>
-          <el-table-column prop="receipt" label="已收金额" width="120">
-          </el-table-column>
-          <el-table-column prop="classsize" label="班级人数" width="120">
-          </el-table-column>
-          <el-table-column prop="paysize" label="缴费人数" width="120">
-          </el-table-column>
-
-          <el-table-column prop="status" label="状态" width="100"
-            :filters="[{ text: '待处理', value: 0 }, { text: '进行中', value: 1 }]"
-            :filter-method="filterTag" filter-placement="bottom-end">
-            <template slot-scope="scope">
-              <el-tag v-if="scope.row.status === 0" type="info" disable-transitions>待处理</el-tag>
-              <el-tag v-else-if="scope.row.status === 1" type="primary" disable-transitions>进行中</el-tag>
-            </template>
-          </el-table-column>
-
-
-          <el-table-column label="备注描述" width="120" type="expand">
-            <template slot-scope="scope">
-              <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="备注描述内容：" style="margin-left: 30px;">
-                  <span>{{ scope.row.descr }}</span>
-                </el-form-item>
-              </el-form>
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <el-row :gutter="20">
-          <el-col :span="4">
-          </el-col>
-          <el-col :span="16">
-            <div class="grid-content bg-purple">
-              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper" :total="pageTotal" class="pagination">
-              </el-pagination>
-            </div>
-          </el-col>
-          <el-col :span="4">
-            <div class="grid-content bg-purple">
-            </div>
-          </el-col>
-        </el-row>
-      </el-dialog> -->
-    </div>
   </div>
 </template>
 
