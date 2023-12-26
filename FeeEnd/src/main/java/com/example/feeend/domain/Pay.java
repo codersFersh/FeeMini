@@ -8,11 +8,11 @@ public class Pay {
     private Integer id;
     private Integer incomeid;
     private String item;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date costtime;
     private Double payout;
 
-    private Integer units;
+    private String units;
 
     private Double unitprice;
 
@@ -20,13 +20,13 @@ public class Pay {
 
     private Integer type;
 
-    private  String  notes;
+    private String notes;
 
 
     public Pay() {
     }
 
-    public Pay(Integer id, Integer incomeid, String item, Date costtime, Double payout, Integer units, Double unitprice, String approver, Integer type, String notes) {
+    public Pay(Integer id, Integer incomeid, String item, Date costtime, Double payout, String units, Double unitprice, String approver, Integer type, String notes) {
         this.id = id;
         this.incomeid = incomeid;
         this.item = item;
@@ -79,11 +79,11 @@ public class Pay {
         this.payout = payout;
     }
 
-    public Integer getUnits() {
+    public String getUnits() {
         return units;
     }
 
-    public void setUnits(Integer units) {
+    public void setUnits(String units) {
         this.units = units;
     }
 
@@ -119,6 +119,7 @@ public class Pay {
         this.notes = notes;
     }
 
+
     @Override
     public String toString() {
         return "Pay{" +
@@ -127,7 +128,7 @@ public class Pay {
                 ", item='" + item + '\'' +
                 ", costtime=" + costtime +
                 ", payout=" + payout +
-                ", units=" + units +
+                ", units='" + units + '\'' +
                 ", unitprice=" + unitprice +
                 ", approver='" + approver + '\'' +
                 ", type=" + type +

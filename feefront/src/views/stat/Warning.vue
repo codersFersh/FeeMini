@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-    <h2>收入管理待处理列表</h2>
-  </div>
+      <h2>收入管理待处理列表</h2>
+    </div>
     <el-table :data="pageData" style="width: 100%; margin: 0 auto; border-radius: 2px; border-bottom: 0px;"
       :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }" max-height="550px" border>
       <el-table-column fixed type="index" width="50" label="序号">
@@ -63,11 +63,11 @@
 </template>
 
 <script>
+import { Message } from 'element-ui';
+import { WarnStatus } from "@/utils/port";
 export default {
   data() {
     return {
-
-
 
       //分页 
       // 总的数据
@@ -81,6 +81,10 @@ export default {
       // 每页大小 默认每页10条数据
       pageSize: 10,
     }
+  },
+  created() {
+    //分页
+    this.fetchData();
   },
   methods: {
     // 改变每页大小的回调
@@ -115,6 +119,10 @@ export default {
       return this.tableData.slice(start, end);
     },
 
+    filterTag(value, row) {
+      return row.status === value;
+    },
+
 
   },
   mounted() {
@@ -123,12 +131,7 @@ export default {
   watch: {
 
   },
-  created() {
-    setTimeout(() => {
-      this.fetchData();
-    }, 1000);
 
-  },
   computed: {
 
   },
@@ -136,3 +139,4 @@ export default {
 
   }
 }
+</script>

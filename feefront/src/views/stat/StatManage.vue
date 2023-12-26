@@ -100,37 +100,7 @@ export default {
     }
   },
   methods: {
-    // // 改变每页大小的回调
-    // handleSizeChange(val) {
-    //   this.pageSize = val;
-    //   this.pageData = this.queryByPage();
-    // },
-    // // 改变当前页的回调
-    // handleCurrentChange(val) {
-    //   this.currentPage = val;
-    //   this.pageData = this.queryByPage();
-    // },
-    // // 获取全部数据
-    // async fetchData() {
-    //   // 请求后端数据
-    //   const data = await WarnStatus();
-    //   this.tableData = data;
-    //   this.pageTotal = data.length;
-    //   this.pageData = this.queryByPage();
-    // },
-    // // 实现分页的方法
-    // //slice() 方法返回一个新的数组对象，
-    // //这一对象是一个由 begin 和 end 决定的原数组的浅拷贝
-    // //（包括 begin，不包括end）。原始数组不会被改变。
-    // //当展示第1页并每页10条数据时：应当截取索引0-9的数据，
-    // //即tableData.slice(0, 10) => currentPage = 1;pageSize = 10。
-    // queryByPage() {
-    //   // 起始位置 = (当前页 - 1) x 每页的大小
-    //   const start = (this.currentPage - 1) * this.pageSize;
-    //   // 结束位置 = 当前页 x 每页的大小
-    //   const end = this.currentPage * this.pageSize;
-    //   return this.tableData.slice(start, end);
-    // },
+
 
 
     filterTag(value, row) {
