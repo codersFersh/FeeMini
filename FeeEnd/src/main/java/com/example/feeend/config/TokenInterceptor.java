@@ -5,6 +5,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//自动注册
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
 

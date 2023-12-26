@@ -33,6 +33,7 @@
               </template>
             </el-table-column>
 
+            <!-- ：filters数据规律 -->
             <el-table-column prop="state" label="类型" width="100"
               :filters="[{ text: '预支收入', value1: 0 }, { text: '预存收入', value1: 1 }]" :filter-method="filterTag2"
               filter-placement="bottom-end">

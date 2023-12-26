@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//声明过滤器的注解
 @WebFilter(filterName = "CorsFilter")
+//标识配置类
 @Configuration
 public class CorsFilter implements Filter {
     @Override

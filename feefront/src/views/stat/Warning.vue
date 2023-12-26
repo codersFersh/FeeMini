@@ -22,6 +22,7 @@
       <el-table-column prop="paysize" label="缴费人数" width="150">
       </el-table-column>
 
+      <!-- ：filters数据规律 -->
       <el-table-column prop="status" label="状态" width="150"
         :filters="[{ text: '待处理', value: 0 }, { text: '进行中', value: 1 }]" :filter-method="filterTag"
         filter-placement="bottom-end">

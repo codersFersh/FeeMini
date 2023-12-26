@@ -18,6 +18,8 @@ public class TokenUtil {
      */
     public static String login(int userId) {
         // 生成唯一的token
+        //replace("-", "") 从字符串中去掉所有的连字符（"-"）
+        //获取随机对象转为字符串赋值给token
         String token = UUID.randomUUID().toString().replace("-", "");
         // 将token和用户id存入map中
         tokenMap.put(token, userId);
@@ -36,9 +38,19 @@ public class TokenUtil {
             return false;
         }
 
+        /**
+         * 1、token.substring(0, 8) 从字符串 token 中提取前 8 个字符。
+         * 因为每个十六进制数字占据 4 位，所以提取的部分应该是一个或多个十六进制数字。
+         * 2、Long.parseLong(..., 16) 将提取的十六进制字符串解析为一个长整型。
+         * 第二个参数 16 表示使用十六进制进行解析。
+         *3、最后，将得到的长整型时间戳乘以 1000，以将其转换为毫秒（milliseconds）。
+         */
+
         // 检查token是否过期
         long createTime = Long.parseLong(token.substring(0, 8), 16) * 1000;
+        //获取当前系统时间
         long nowTime = System.currentTimeMillis();
+        //除以 1000 就得到了秒数。
         if ((nowTime - createTime) / 1000 > TOKEN_EXPIRE_TIME) {
             // 过期了，需要删除后端的token记录
             logout(token);

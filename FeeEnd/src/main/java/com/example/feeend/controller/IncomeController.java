@@ -7,16 +7,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+/**
+ * @Controller 一般应用在有返回界面的应用场景下
+ * @RestController 如果只是接口，那么就用 RestController 来注解.
+ */
 
 @RestController
+//将HTTP请求映射到控制器方法上
 @RequestMapping("income")
 @CrossOrigin("http://localhost:8080")
 public class IncomeController {
     /**
      * 使用mybatispuls
-     * 方法参数注入： 直接将依赖作为方法参数，Spring Boot将根据类型进行自动注入。这种方式在方法级别进行注入。
+     * 方法参数注入： 直接将依赖作为方法参数，Spring Boot将根据类型进行自动注入。
+     * 这种方式在方法级别进行注入。
      */
+    //构造注入所以要修饰成员变量
     private final IncomeService incomeService;
 
     @Autowired
@@ -28,6 +34,7 @@ public class IncomeController {
      * 获取所有收入记录
      */
     @GetMapping("/all")
+    //将java对象转为json格式的数据
     @ResponseBody
     public List<Income> AllIncome() {
         return incomeService.IncomeAll();
@@ -35,6 +42,7 @@ public class IncomeController {
 
     /**
      * 根据ID获取一条收入记录
+     * @RequestParam将指定的请求参数赋值给方法中的形参。
      */
     @GetMapping("/searchId")
     @ResponseBody
@@ -72,6 +80,9 @@ public class IncomeController {
 
     /**
      * 新增收入记录
+     *
+     * @RequestBody最多只能有一个，而@RequestParam()可以有多个。
+     * @RequestBody接收前端传递给后端的json字符串中的数据
      */
     @PostMapping("/add")
     @ResponseBody

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 //持久层
+//@Repository用在持久层的接口上，这个注解是将接口的一个实现类交给spring管理。
 @Repository
 //在对应的Mapper上继承基本的类BaseMapper
 public interface IncomeMapper extends BaseMapper<Income> {
