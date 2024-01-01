@@ -20,7 +20,7 @@ public class TokenUtil {
         // 生成唯一的token
         //replace("-", "") 从字符串中去掉所有的连字符（"-"）
         //获取随机对象转为字符串赋值给token
-        String token = UUID.randomUUID().toString().replace("-", "");
+            String token = UUID.randomUUID().toString().replace("-", "");
         // 将token和用户id存入map中
         tokenMap.put(token, userId);
         System.out.println(token);

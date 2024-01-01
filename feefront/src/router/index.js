@@ -14,7 +14,7 @@ Vue.use(VueRouter);
 
 const routes = [{
         path: '/',
-        redirect: '/login',
+        redirect: '/Login',
     },
     {
         path: '/Home',
@@ -100,11 +100,19 @@ const router = new VueRouter({
 //to,相当于this.$rotue,要跳到某个页面的路由信息
 //from,代表当前页面的信息
 router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('token')
-    if (to.name !== 'Login' && !token) next({ name: 'Login' })
-        // 如果用户未能验证身份，则 `next` 会被调用两次
-    next()
-})
+    const token = localStorage.getItem('token');
+
+    // 如果未经身份验证，并且不是已经在登录页面，则重定向到登录页面
+    if (!token && to.path !== '/Login') {
+        // 使用 Vue 实例的 this.$message
+        router.app.$message.warning("请先登录");
+        return next({ path: '/Login' });
+    } else {
+        // 如果已经身份验证，或者已经在 Login 页面，继续导航
+        next();
+    }
+});
+
 
 
 export default router;

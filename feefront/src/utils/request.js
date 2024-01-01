@@ -28,8 +28,13 @@ axios.interceptors.response.use(
             switch (error.response.status) {
                 case 401:
                     localStorage.removeItem('token');
-                    Message.error("Token已失效或者不存在");
-                    router.push({ name: 'Login' });
+                    // 获取当前路由信息
+                    const currentRoute = router.currentRoute;
+
+                    // 如果当前路径不是登录页面，则重定向到登录页
+                    if (currentRoute.path !== "/Login") {
+                        router.push("/Login");
+                    }
                     break;
             }
         }

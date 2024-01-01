@@ -47,7 +47,8 @@ public class LoginController {
     @PostMapping("/logout")
     @ResponseBody
     public ResponseEntity<?>logout(HttpServletRequest request){
-        String token = request.getHeader("Authorization");
+//        String token = request.getHeader("Authorization");
+        String token = request.getHeader("Token");
         if(token !=null){
             TokenUtil.logout(token);
         }

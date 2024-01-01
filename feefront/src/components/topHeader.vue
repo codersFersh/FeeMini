@@ -11,6 +11,8 @@
 </template>
 <script>
 import { Logout } from "@/utils/port";
+import router from '@/router';
+import { Message } from 'element-ui';
 export default {
   name: 'topHeader',
   data() {
@@ -19,24 +21,32 @@ export default {
     }
   },
   methods: {
-    logout() {
-  // 从本地存储中获取token
-  const token = window.localStorage.getItem("token");
-  // 调用接口
-  Logout({}, {
-    headers: {
-      Authorization: token,
-    },
-  })
-  .then(() => {
-    // 删除本地存储中的token
-    window.localStorage.removeItem("token");
-    // 跳转到登录页面
-    this.$router.push("/");
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+    async logout() {
+    // 从本地存储中获取token
+    const token = window.localStorage.getItem("token");
+
+    try {
+        // 调用接口
+        await Logout({}, {
+            headers: {
+                // Authorization: token,
+                Token: token,
+            },
+        });
+
+        // 删除本地存储中的token
+        window.localStorage.removeItem("token");
+
+        // 检查当前路由是否是根路由，如果不是才执行重定向
+        // if (router.currentRoute.path !== '/') {
+        //     router.replace("/");
+        // }
+        this.$router.push("/");
+
+        Message.success("已退出登录");
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 
@@ -44,7 +54,6 @@ export default {
 }
 </script>
 <style>
-
 .topHeader {
   position: absolute;
   top: 0;
@@ -52,13 +61,13 @@ export default {
   padding: 0 auto;
   max-width: 70px;
   width: 100%;
-  top:0;
+  top: 0;
   right: 0;
   border: -0.727;
 }
 
 .el-menu.el-menu--horizontal {
-    border-bottom: solid 0px #e6e6e6 !important;
+  border-bottom: solid 0px #e6e6e6 !important;
 }
 
 .menu_end {
@@ -77,7 +86,7 @@ export default {
   color: #eee;
 }
 
-.el-menu-demo{
+.el-menu-demo {
   background-color: #B3C0D1 !important;
 }
 </style>

@@ -27,6 +27,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                 //清除token,以便于重新登录
                 TokenUtil.logout(token);
 
+
                 //返回401，让前端跳回登录页
                 response.setStatus(401);
 

@@ -86,9 +86,12 @@ export default {
             account: this.loginForm.account,
             password: this.loginForm.password
           };
-          LoginUser(user).then((res) => {          
-              if (res != null) {
-                const token = res.token;
+          LoginUser(user)
+            .then((res) => {
+              // 使用可选链操作符避免 undefined 错误
+              const token = res?.token;
+
+              if (token) {
                 window.localStorage.setItem("token", token);
                 this.$message({
                   message: "登录成功",
@@ -96,18 +99,28 @@ export default {
                 });
                 this.$router.push("/Home/StatManage");
               } else {
+                // 处理没有 token 的情况
                 this.$message({
-                  message: "登录失败，请检查用户名和密码是否正确",
+                  message: "登录失败，未获取到有效的 token",
                   type: "error",
                 });
               }
             })
             .catch((error) => {
               console.log(error);
-              this.$message({
-                message: "登录请求失败：" + error,
-                type: "error",
-              });
+              if (error.status === 401) {
+                // 处理 401 错误，未授权
+                this.$message({
+                  message: "登录失败，请检查用户名和密码是否正确",
+                  type: "error",
+                });
+              } else {
+                // 处理其他错误
+                this.$message({
+                  message: "登录请求失败：" + error,
+                  type: "error",
+                });
+              }
             });
         } else {
           console.log("error submit!!");
@@ -115,6 +128,8 @@ export default {
         }
       });
     },
+
+
   }
 }
 
@@ -174,8 +189,4 @@ export default {
   }
 
 }
-
-
-
-
 </style>

@@ -125,8 +125,8 @@ export default {
                 type: "success",
               });
               this.$refs.ruleForm.resetFields()
-              // 新增成功后切换到支出管理标签页
-              this.handleTabClick({ label: '支出管理' });
+              // 新增成功后切换到收出管理标签页
+              // this.handleTabClick({ label: '收入管理' });
             } else {
               this.$message({
                 message: "新增班费收入失败",
@@ -138,11 +138,11 @@ export default {
       })
     },
     // 切换标签页的方法
-    handleTabClick(tab) {
-      if (tab.label === '支出管理') {
-        this.activeTab = 'tab1';
-      }
-    },
+    // handleTabClick(tab) {
+    //   if (tab.label === '收入管理') {
+    //     this.activeTab = 'tab1';
+    //   }
+    // },
   },
   // created() {
   //   // 获取班费余额
